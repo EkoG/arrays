@@ -1,0 +1,36 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the minimumBribes function below.
+def minimumBribes(q):
+    moves = 0
+    suma = 0
+    for i in range(len(q)-1):
+        suma = q[i] - i - 1
+        if suma >= 3:
+            return print("Too chaotic")
+    for i in range(len(q)-1): #La lista es ordenada de atrás hacia adelanta
+        if q[len(q)-3-i] == len(q)-i:
+            q[len(q)-3-i], q[len(q)-2-i] = q[len(q)-2-i], q[len(q)-3-i]
+            q[len(q)-2-i], q[len(q)-1-i] = q[len(q)-1-i], q[len(q)-2-i]
+            moves += 2 
+        elif q[len(q)-2-i] == len(q)-i:
+            q[len(q)-2-i], q[len(q)-1-i] = q[len(q)-1-i], q[len(q)-2-i]
+            moves += 1 
+    return print(moves)
+
+        
+if __name__ == '__main__':
+    t = int(input())
+
+    for t_itr in range(t):
+        n = int(input())
+
+        q = list(map(int, input().rstrip().split()))
+
+        minimumBribes(q)
