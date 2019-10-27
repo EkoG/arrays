@@ -1,0 +1,44 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+# Complete the arrayManipulation function below.
+def arrayManipulation(n, queries):
+    q = [0]*(n + 1)   #Lista de ceros donde se realiza la suma, la lista debe tener uno más y evitar que los elementos únicos se eliminen así mismos
+    suma = 0
+    maxx = 0
+    for i in range(len(queries)): #obtención de a, b & k
+        a = queries[i][0] - 1
+        b = queries[i][1] 
+        k = queries[i][2]
+        q[a] += k                 #Añadir valores de k inicio a q
+        q[b] -= k                 #Añadir valores de k fin a q
+    for j in q:                   
+        suma += j                 #sumar los valores de q y encontrar el valor más grande
+        if suma > maxx:
+            maxx = suma
+    return maxx
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    nm = input().split()
+
+    n = int(nm[0])
+
+    m = int(nm[1])
+
+    queries = []
+
+    for _ in range(m):
+        queries.append(list(map(int, input().rstrip().split())))
+
+    result = arrayManipulation(n, queries)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
