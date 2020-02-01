@@ -1,0 +1,33 @@
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        if not matrix: return []
+        spiral_matrix = []
+        rows = len(matrix)
+        colums = len(matrix[0])
+        matrix_visited = [[False]*colums for _ in matrix]       #Si la casilla fue visitada, esta se convierte en un nuevo límite      
+        c = r = i = 0
+        movement_c = [1,0,-1,0]                                 # Este es el movimiento en las columnas, si se avanza sobre ellas, las filas quedan estaticas
+        movement_r = [0,1,0,-1]                                 # De igual forma las columnas quedan estaticas si se avanza en las columnas
+        for _ in range(rows*colums):
+            limit_c = c + movement_c[i]
+            limit_r = r + movement_r[i]
+            spiral_matrix.append(matrix[r][c])
+            matrix_visited[r][c] = True                         #Para evitar que la matriz salga de rango, se crean dos variables limit_c y limit_r
+            if 0 <= limit_c < colums and 0 <= limit_r < rows and not matrix_visited[limit_r][limit_c]:
+                c = limit_c                                     #ambas salen de rango, para evitar que c y r  salgan de los limites de Matrix y 
+                r = limit_r                                     #Se asigna el valor de limit_r y limit_c si estas estan dentro de rango
+    
+            else:                                               #Aquí es donde suceden los cambios de movimiento en la matriz, si se salen de rango 
+                                                                #limit_c y limit_r; la manera de aumentar o dismiuir cambia de acuerdo a i (SUPER_IMPORTANTE)
+                i = (1 + i) % 4
+                c +=  movement_c[i]                             # c y r son ajustados para ser anexados en la siguiente interacción y volver a ser aumentados o disminuidos 
+                                                                # en las variables limit (c y r
+                r +=  movement_r[i]
+        return spiral_matrix
+                
+            
+            
+                       
+                       
+            
+        
